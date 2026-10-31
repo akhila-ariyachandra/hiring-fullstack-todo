@@ -17,8 +17,8 @@ types and call it with a typed client. It is still a plain REST API over HTTP.
    pnpm install
    ```
 
-2. Create the database config. Copy `packages/db/.env.example` to
-   `packages/db/.env` and set `DATABASE_URL` (see below).
+2. Create the database config. Create a `packages/db/.env` file and set
+   `DATABASE_URL` (see below).
 
 3. Start the server, either with the frontend from the repo root:
 

@@ -33,10 +33,15 @@ over HTTP.
 
 ### Environment variables
 
-Copy `packages/db/.env.example` to `packages/db/.env` and set `DATABASE_URL` to
-your MongoDB connection string. Every app that uses the database loads this one
-file, regardless of its working directory. See the
-[backend README](apps/server/README.md) for connection notes.
+Create a `packages/db/.env` file and set `DATABASE_URL` to your MongoDB
+connection string:
+
+```bash
+DATABASE_URL="mongodb://localhost:27017/todos"
+```
+
+Every app that uses the database loads this one file, regardless of its working
+directory. See the [backend README](apps/server/README.md) for connection notes.
 
 ### Install
 
