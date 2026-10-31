@@ -27,7 +27,7 @@ over HTTP.
 
 ### Prerequisites
 
-- Node.js
+- Node.js 24.15.0 (pinned in `devEngines`; pnpm downloads it if needed)
 - [pnpm](https://pnpm.io/)
 - A MongoDB database, version 8.0 or newer (local or Atlas)
 
@@ -71,7 +71,7 @@ Run from the repo root:
 | Script                 | What it does                        |
 | ---------------------- | ----------------------------------- |
 | `pnpm dev`             | Start the frontend and backend      |
-| `pnpm build`           | Build all apps                      |
+| `pnpm build`           | Build the frontend                  |
 | `pnpm lint`            | Lint all apps                       |
 | `pnpm check-types`     | Type-check all apps                 |
 | `pnpm knip`            | Find unused files, exports and deps |

@@ -12,6 +12,18 @@ const todoSchema = z.object({
     .transform((v) => v ?? null),
 });
 
+// A malformed id can't match any todo, so it's treated the same as an unknown
+// one instead of reaching the database and failing there.
+const validateId = zValidator(
+  "param",
+  z.object({ id: z.string().regex(/^[0-9a-f]{24}$/i) }),
+  (result, c) => {
+    if (!result.success) {
+      return c.json({ error: "Todo not found" }, 404);
+    }
+  },
+);
+
 // Routes are chained so their types are preserved for the RPC client.
 const todosRouter = new Hono()
   .get("/", async (c) => {
@@ -30,9 +42,9 @@ const todosRouter = new Hono()
 
     return c.json(created, 201);
   })
-  .put("/:id", zValidator("json", todoSchema), async (c) => {
+  .put("/:id", validateId, zValidator("json", todoSchema), async (c) => {
     const updated = await db.orm.todos
-      .where({ id: c.req.param("id") })
+      .where({ id: c.req.valid("param").id })
       .update({ ...c.req.valid("json"), updatedAt: new Date() });
 
     if (!updated) {
@@ -41,8 +53,10 @@ const todosRouter = new Hono()
 
     return c.json(updated, 200);
   })
-  .patch("/:id/done", async (c) => {
-    const todo = await db.orm.todos.where({ id: c.req.param("id") }).first();
+  .patch("/:id/done", validateId, async (c) => {
+    const todo = await db.orm.todos
+      .where({ id: c.req.valid("param").id })
+      .first();
 
     if (!todo) {
       return c.json({ error: "Todo not found" }, 404);
@@ -54,9 +68,9 @@ const todosRouter = new Hono()
 
     return c.json(updated, 200);
   })
-  .delete("/:id", async (c) => {
+  .delete("/:id", validateId, async (c) => {
     const deleted = await db.orm.todos
-      .where({ id: c.req.param("id") })
+      .where({ id: c.req.valid("param").id })
       .delete();
 
     if (!deleted) {

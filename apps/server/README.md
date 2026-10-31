@@ -32,8 +32,10 @@ types and call it with a typed client. It is still a plain REST API over HTTP.
    pnpm --filter server dev
    ```
 
-The server listens on http://localhost:4000. To run a production build, use
-`pnpm --filter server build` and then `pnpm --filter server start`.
+The server listens on http://localhost:4000. To run it without watching for
+changes, use `pnpm --filter server start`. There is no build step: the workspace
+packages export TypeScript, so the server runs from source through `tsx`.
+`pnpm --filter server check-types` type-checks it.
 
 ## MongoDB connection notes
 
@@ -73,8 +75,8 @@ A todo looks like this:
 ```
 
 `id` is the MongoDB `_id`, returned as a string. Requests are validated with
-zod: `title` must not be empty after trimming. Unknown ids return a 404 with
-`{ "error": "Todo not found" }`.
+zod: `title` must not be empty after trimming. Unknown or malformed ids return a
+404 with `{ "error": "Todo not found" }`.
 
 ## Configuration
 
