@@ -1,0 +1,13 @@
+// use prisma-8
+
+// MongoDB has no column defaults or @updatedAt, so createdAt/updatedAt are
+// set by the API layer.
+model Todo {
+  id          ObjectId @id @map("_id")
+  title       String
+  description String?
+  done        Bool
+  createdAt   Date
+  updatedAt   Date
+  @@map("todos")
+}

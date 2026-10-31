@@ -1,0 +1,24 @@
+{
+  "name": "@repo/db",
+  "version": "1.0.0",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "db:emit": "prisma contract emit",
+    "db:plan": "prisma migration plan",
+    "db:sign": "prisma db sign"
+  },
+  "dependencies": {
+    "@prisma/orm-mongo": "catalog:",
+    "dotenv": "catalog:",
+    "mongodb": "catalog:"
+  },
+  "devDependencies": {
+    "@prisma/cli-engine": "catalog:",
+    "@types/node": "catalog:",
+    "prisma": "catalog:",
+    "typescript": "catalog:"
+  }
+}
